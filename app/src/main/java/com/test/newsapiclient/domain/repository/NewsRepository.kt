@@ -1,6 +1,5 @@
 package com.test.newsapiclient.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.test.newsapiclient.data.model.ApiResponse
 import com.test.newsapiclient.data.model.Article
 import com.test.newsapiclient.data.util.Resource
@@ -13,5 +12,6 @@ interface NewsRepository{
     suspend fun saveNews(article: Article)
     suspend fun deleteNews(article: Article)
     fun getSavedNews(): Flow<List<Article>>
+    suspend fun getAllNews(language: String, page: Int): Resource<ApiResponse>
 
 }

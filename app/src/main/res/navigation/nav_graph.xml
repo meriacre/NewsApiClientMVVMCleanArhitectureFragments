@@ -32,4 +32,13 @@
             android:name="selected_article"
             app:argType="com.test.newsapiclient.data.model.Article" />
     </fragment>
+    <fragment
+        android:id="@+id/allNewsFragment"
+        android:name="com.test.newsapiclient.presentation.AllNewsFragment"
+        android:label="fragment_all_news"
+        tools:layout="@layout/fragment_all_news">
+        <action
+            android:id="@+id/action_allNewsFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
 </navigation>

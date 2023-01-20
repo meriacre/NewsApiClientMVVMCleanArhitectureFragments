@@ -8,6 +8,7 @@ import retrofit2.Response
 class NewsRemoteDataSourceImpl(
     private val newsApiService: NewsApiService
 ): NewsRemoteDataSource {
+
     override suspend fun getTopHeadLines(country: String, page: Int): Response<ApiResponse> {
         return newsApiService.getTopHeadLines(country, page)
     }
@@ -18,5 +19,9 @@ class NewsRemoteDataSourceImpl(
         page: Int
     ): Response<ApiResponse> {
         return newsApiService.getSearchedTopHeadLines(country, searchQuery, page)
+    }
+
+    override suspend fun getAllNews(language: String, page: Int): Response<ApiResponse> {
+        return newsApiService.getAllNews(language, page)
     }
 }

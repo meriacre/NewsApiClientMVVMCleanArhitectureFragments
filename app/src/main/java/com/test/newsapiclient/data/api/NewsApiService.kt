@@ -29,4 +29,14 @@ interface NewsApiService {
         @Query("apiKey")
         apikey: String = BuildConfig.API_KEY
     ): Response<ApiResponse>
+
+    @GET("v2/everything")
+    suspend fun getAllNews(
+        @Query("q")
+        language: String,
+        @Query("page")
+        page: Int,
+        @Query("apiKey")
+        apikey: String = BuildConfig.API_KEY
+    ): Response<ApiResponse>
 }

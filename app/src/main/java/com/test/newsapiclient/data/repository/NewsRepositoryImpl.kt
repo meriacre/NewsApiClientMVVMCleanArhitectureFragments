@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class NewsRepositoryImpl(
-    private val newsRepositoryDataSource: NewsRemoteDataSource,
+    private val newsRemoteDataSource: NewsRemoteDataSource,
     private val newsLocalDataSource: NewsLocalDataSource
 ): NewsRepository {
     override suspend fun getNewsHeadlines(country: String, page: Int): Resource<ApiResponse> {
-        return responseToResource(newsRepositoryDataSource.getTopHeadLines(country, page))
+        return responseToResource(newsRemoteDataSource.getTopHeadLines(country, page))
     }
 
     override suspend fun getSearchedNews(
@@ -22,7 +22,7 @@ class NewsRepositoryImpl(
         searchQuery: String,
         page: Int
     ): Resource<ApiResponse> {
-        return responseToResource(newsRepositoryDataSource.getSearchedTopHeadLines(country, searchQuery, page))
+        return responseToResource(newsRemoteDataSource.getSearchedTopHeadLines(country, searchQuery, page))
     }
 
     private fun responseToResource(response: Response<ApiResponse>): Resource<ApiResponse>{
@@ -44,5 +44,9 @@ class NewsRepositoryImpl(
 
     override fun getSavedNews(): Flow<List<Article>> {
         return newsLocalDataSource.getSavedArticles()
+    }
+
+    override suspend fun getAllNews(language: String, page: Int): Resource<ApiResponse> {
+        return responseToResource(newsRemoteDataSource.getAllNews(language, page))
     }
 }

@@ -42,4 +42,10 @@ class UseCaseModule {
         return DeleteSavedNewsUseCase(newsRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideAllNewsUseCase(newsRepository: NewsRepository): GetAllNewsUseCase{
+        return GetAllNewsUseCase(newsRepository)
+    }
+
 }

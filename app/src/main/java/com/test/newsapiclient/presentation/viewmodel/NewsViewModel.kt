@@ -21,7 +21,8 @@ class NewsViewModel(
     private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
     private val saveNewsUseCase: SaveNewsUseCase,
     private val getSavedNewsUseCase: GetSavedNewsUseCase,
-    private val deleteSavedNewsUseCase: DeleteSavedNewsUseCase
+    private val deleteSavedNewsUseCase: DeleteSavedNewsUseCase,
+    private val getAllNewsUseCase: GetAllNewsUseCase
 ): AndroidViewModel(app) {
 
     // get news from api
@@ -97,6 +98,24 @@ class NewsViewModel(
 
     fun deleteArticle(article: Article) = viewModelScope.launch {
         deleteSavedNewsUseCase.execute(article)
+    }
+
+    //get all news
+
+    val allNews: MutableLiveData<Resource<ApiResponse>> = MutableLiveData()
+
+    fun getAllNews(language: String, page: Int) = viewModelScope.launch {
+        allNews.postValue(Resource.Loading())
+        try {
+            if (isNetworkAvailable(app)){
+                val response = getAllNewsUseCase.execute(language, page)
+                allNews.postValue(response)
+            }else{
+                allNews.postValue(Resource.Error("No Internet Connection"))
+            }
+        }catch (e:Exception){
+            allNews.postValue(Resource.Error(e.message.toString()))
+        }
     }
 
 }
